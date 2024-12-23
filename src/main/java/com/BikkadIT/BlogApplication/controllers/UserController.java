@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.BikkadIT.BlogApplication.payloads.ApiResponse;
 import com.BikkadIT.BlogApplication.payloads.UserDto;
 import com.BikkadIT.BlogApplication.services.UserService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -43,17 +45,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 		@PutMapping("/{userId}")
 		public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable("userId") Integer uid)
 		{
-			UserDto updatedUser = this.userService.updateuser(userDto, uid);
+			UserDto updatedUser = this.userService.updateUser(userDto, uid);
 			return ResponseEntity.ok(updatedUser);
 			
 		}
 		
-		//DELETE - Delete USer
 		
-		public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") Integer uid){
-			this.userService.deleteuser(uid);
-			return new ResponseEntity<ApiResponse>(new ApiResponse("User Deleted Successfully", true),HttpStatus.OK);
-		}
 		
 		//GET - Get users
 		
@@ -66,9 +63,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 		//GET - Get users
 		@GetMapping("/{userId}")
 		public ResponseEntity<Object> getsingleUser(@PathVariable Integer userId) {
-			return ResponseEntity.ok((this.userService).getUserById(userId));
+			return ResponseEntity.ok((this.userService).getAllUser());
 			
 		}
+		
+		//DELETE - Delete USer
+				@DeleteMapping("/{userId}")
+				public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") Integer uid){
+					this.userService.deleteUser(uid);
+					return new ResponseEntity<ApiResponse>(new ApiResponse("User Deleted Successfully", true),HttpStatus.OK);
+				}
 		
 		
 		
